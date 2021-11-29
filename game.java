@@ -180,7 +180,7 @@ public class game {
         random r2 = new random(4000, -4000);
         randomString rs = new randomString();
         Scanner scan = new Scanner(System.in);
-        random r1 = new random(20, 0);
+        random r1 = new random(25, 0);
         // hardcode
 
         tc.addtoys("Teddie");
@@ -269,7 +269,7 @@ public class game {
                                     // flow to tilecarpet
                                     int a = r2.get_random();
                                     int b = r2.get_random();
-                                    System.out.println(a + " " + b + "\n");
+                                    System.out.println("Calculate Integer Division of " + a + " Divided by  " + b + " :\n");
                                     genCalc<Integer> genInt = new genCalc(a, b);
                                     int result = genInt.div();
                                     int ip = 0;//
