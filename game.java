@@ -1,349 +1,347 @@
+package assignment4;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-class player {
-    private String name;
-    private int points;
-    private int location;
+class bucket {
+    private int i = 0;
+    private ArrayList<String> buck = new ArrayList<String>();
 
-    public void setname(String n) {
-        name = n;
+    public void addItems(String s) {
+        buck.add(s);
     }
 
-    public String get_name() {
+    public void getItems() {
+        for (i = 0; i < buck.size(); i++) {
+            System.out.println(buck.get(i) + "\n");
+        }
+    }
+}
+
+class randomString {
+
+    private String auc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private String alc = "abcdefghijklmnopqrstuvwxyz";
+
+    private String allCharacters = alc + auc;
+
+    public String getrString() {
+        StringBuffer randomString = new StringBuffer();
+        // loop for 10 times
+        int count = 0;
+        while (count < 4) {
+
+            int randomIndex = (int) (Math.random() * allCharacters.length());
+            randomString.append(allCharacters.charAt(randomIndex));
+            count++;
+        }
+        return randomString.toString();
+    }
+
+}
+
+class random {
+    int min;
+    int max;
+    int rand;
+
+    random(int Max, int Min) {
+
+        min = Min;
+        max = Max;
+
+    }
+
+    public int get_random() {
+        rand = (int) Math.floor(Math.random() * (max - min + 1) + min);
+        return rand;
+    }
+
+}
+
+class player {
+    private int jumps = 5;
+    private bucket b = new bucket();
+    private int tile_num;
+
+    // random rand = new random(50, 0);
+    public void printbucket() {
+        b.getItems();
+    }
+
+    public void update(String s) {// updates entire player stat;
+        if (jumps > 0) {
+            jumps--;
+            if (s.length() > 0) {
+                b.addItems(s);
+            }
+        }
+    }
+
+    public void settile(int i) {
+        tile_num = i;
+    }
+
+    public void play() {
+
+        // tile_num = rand.get_random();
+        System.out.println(tile_num + 1); // rand num is diff from tile num
+
+    }
+
+    public int get_tilenum() {
+        return tile_num;
+    }
+
+}
+
+class softToys implements Cloneable {
+    private String name;
+
+    public void setname(String s) {
+        name = s;
+    }
+
+    public String getname() {
         return name;
     }
 
-    public int get_points() {
-        return points;
-    }
-
-    public void updatepoint(int p) {
-        points = points + p;
-    }
-
-    public int get_location() {
-        return location;
-    }
-
-    public void updatelocation(int l) {// update is better so you can actually
-        location = location + l;// l can be actua
-    }
-
-    public void player() {// for player take input separately and pass ip as arg
-        points = 0;
-        location = 0;
-        // setname(n);
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
 
-class snake {
-    private int point_deduction;
-    private int location_deduction;
+class TileCarpet implements Cloneable {
+    private ArrayList<softToys> carpet = new ArrayList<softToys>();// composition and array index is tile number
+    // private softToys st = new softToys();
 
-    public int get_point_deduction() {
-        return this.point_deduction;
+    public void addtoys(String s) {
+        softToys st = new softToys();
+        st.setname(s);
+        carpet.add(st);
     }
 
-    public int get_location_deduction() {
-        return this.location_deduction;
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
-    public void set(int pd, int ld) {
-        this.point_deduction = pd;
-        this.location_deduction = ld;
+    public softToys getToy(int i) throws CloneNotSupportedException {// i is index for array list or tile num
+        // softToys sft;
+        return (softToys) carpet.get(i).clone();
+        // modifications needed for object cloning
     }
 
-    public snake() {
-        this.point_deduction = -2;
-        this.location_deduction = -4;
-    }
+    // public Object clone() throws CloneNotSupportedException {
+    // return super.clone();
+    // }
 
 }
 
-class KingCobra extends snake {
-    private int point_deduction;
-    private int location_deduction;
+class genCalc<T> {
+    T ob1;
+    T ob2;
 
-    @Override
-    public int get_point_deduction() {
-        return this.point_deduction;
+    // T result;
+    genCalc(T a, T b) {// basically it generates 2 random numbers and then prints them out
+
+        ob1 = a;
+        ob2 = b;
     }
 
-    public int get_location_deduction() {
-        return this.location_deduction;
-    }
-
-    public void set(int pd, int ld) {
-        this.point_deduction = pd;
-        this.location_deduction = ld;
-    }
-
-    public KingCobra() {
-        this.point_deduction = -4;
-        this.location_deduction = -8;
-    }
-}
-
-class ladder {
-    private int point_given;
-    private int location_bonus;
-
-    public int get_point_awarded() {
-        return this.point_given;
-    }
-
-    public int get_location_awarded() {
-        return this.location_bonus;
-    }
-
-    public void set(int pg, int lg) {
-        this.point_given = pg;
-        this.location_bonus = lg;
-    }
-
-    public ladder() {
-        this.point_given = 2;
-        this.location_bonus = 4;
-    }
-}
-
-class elevator extends ladder {
-    private int point_given;
-    private int location_bonus;
-
-    @Override
-    public int get_point_awarded() {
-        return this.point_given;
-    }
-
-    public int get_location_awarded() {
-        return this.location_bonus;
-    }
-
-    public void set(int pg, int lg) {
-        this.point_given = pg;
-        this.location_bonus = lg;
-    }
-
-    public elevator() {
-        this.point_given = 4;
-        this.location_bonus = 8;
-    }
-}
-
-class floor {
-    private int type;// 0 is empty, 1 is snake ,2 is KC, 3 is ladder ,4 is elevator;
-    private int location;
-    private int update_for_location;// how much do we need to chnage location
-    private int points_given;
-
-    public void settype(int t) {
-        type = t;
-    }
-
-    public void setlocation(int l) {
-        location = l;
-    }
-
-    public int get_location() {
-        return location;
-    }
-
-    public int get_update_location() {
-        return update_for_location;
-    }
-
-    public int get_points_given() {
-        return points_given;
-    }
-
-    public int get_type() {
-        return type;
-    }
-
-    public void setpoints_given() {// just setting up the mat nothing else
-        if (type == 0) {
-            points_given = 1;// we need to call setpoint after input for type
-            update_for_location = 0;
-        } else if (type == 1) {
-            snake sn = new snake();
-            points_given = sn.get_point_deduction();
-            update_for_location = sn.get_location_deduction();
-        } else if (type == 2) {
-            KingCobra kc = new KingCobra();
-            points_given = kc.get_point_deduction();
-            update_for_location = kc.get_location_deduction();
-        } else if (type == 3) {
-            ladder la = new ladder();
-            points_given = la.get_point_awarded();
-            update_for_location = la.get_location_awarded();
-        } else if (type == 4) {
-            elevator el = new elevator();
-            points_given = el.get_point_awarded();
-            update_for_location = el.get_location_awarded();
-        } else {
-
-            points_given = 0;
-            update_for_location = 0;
+    public int div() {
+        try {
+            return ((int) ob1 / (int) ob2);
+        } catch (ArithmeticException e) {
+            System.out.println("System Fault !! Zero Division Error \nYou may press -1 to win the prize!!");
         }
-
+        return -1;
     }
 
-    // can be used to update stuff
-    // but for now i will hardcode the mat
+    public String cat() {
+        String s = (String) ob1 + (String) ob2;
+        return s;
+    }
+    // public T geta() {
+    // return (ob1);
+    // }
+
+    // public T getb() {
+    // return (ob2);
+    // }
+
 }
 
 public class game {
-    static ArrayList<floor> flr = new ArrayList<floor>();
-    // static dice d = new dice();
+    public static void main(String[] args) throws CloneNotSupportedException {
 
-    static public int getface() {
-        return ((int) ((Math.random() * (2)) + 1));
-    }
-
-    public static void main(String[] args) {
-
-        Scanner scan = new Scanner(System.in);
-        for (int i = 0; i < 14; i++) {// sets floor
-            flr.add(new floor());
-
-            if (i == 2) {
-                flr.get(flr.size() - 1).settype(4);
-            } else if (i == 5) {
-                flr.get(flr.size() - 1).settype(1);
-            } else if (i == 8) {
-                flr.get(flr.size() - 1).settype(3);
-            } else if (i == 11) {
-                flr.get(flr.size() - 1).settype(2);
-            } else if (i == 0) {
-                flr.get(flr.size() - 1).settype(-1);
-            } else {
-                flr.get(flr.size() - 1).settype(0);
-            }
-            flr.get(flr.size() - 1).setlocation(i);
-            flr.get(flr.size() - 1).setpoints_given();
-
-        }
+        TileCarpet tc = new TileCarpet();
         player p = new player();
-        System.out.println("Enter player name and hit Enter");
-        p.setname(scan.nextLine());
-        System.out.println("The game setup is ready!");
-        int n = 0;
-        int game_start = 0;
-        int count = 0;
+        random r2 = new random(4000, -4000);
+        randomString rs = new randomString();
+        Scanner scan = new Scanner(System.in);
+        random r1 = new random(20, 0);
+        // hardcode
 
-        while (n == 0) {
-            int dise = 0;// dice result
-            System.out.println("Hit enter to roll a dice");
-            String s = scan.nextLine();
-            if (s.equals("")) {
-                dise = getface();
-                System.out.println("The dice gave " + dise);
-                if (p.get_location() == 12 && dise == 2) {
-                    System.out.println("Player cannot move!");
-                    continue;
+        tc.addtoys("Teddie");
+        tc.addtoys("Winnie the Pooh");
+        tc.addtoys("Elephant");
+        tc.addtoys("Tiger");
+        tc.addtoys("Mickey Mouse");
+        tc.addtoys("Donald Duck");
+        tc.addtoys("Cat");
+        tc.addtoys("Black Cat");
+        tc.addtoys("Bear");
+        tc.addtoys("White Bear");
+        tc.addtoys("Rhinoceros");
+        tc.addtoys("Eagle");
+        tc.addtoys("Pigeon");
+        tc.addtoys("Deer");
+        tc.addtoys("Peakcock");
+        tc.addtoys("Dog");
+        tc.addtoys("Dolphin");
+        tc.addtoys("Whale");
+        tc.addtoys("Cow");
+        tc.addtoys("Tweety");
+        // System.out.println(tc.carpet.size());
+
+        for (int i = 0; i < 5; i++) {
+
+            int flg2 = 1;
+            while (flg2 == 1) {
+                System.out.println("\nHit Enter for your " + (i + 1) + "th hop:");
+                int flg1 = 1;
+                String sup = "-1";
+                while (flg1 == 1) {
+                    try {
+                        sup = scan.nextLine();
+                        flg1 = 0;
+                    } catch (InputMismatchException e) {
+                        System.err.println("INPUT ERROR");
+                    }
                 }
-                if (((game_start == 0) && dise != 1)) {
-                    System.out.println("The game cannot start untill dice gives 1 !");
-                    continue;
-                } else {
-                    count++;
 
-                    game_start = 1;
-                    if (count == 1) {
-                        p.updatelocation(0);
-                        // p.updatepoint(1);
-                        System.out.println("Player position floor: 0");
-                        System.out.println(p.get_name() + " has reached an Empty Floor!");
-                        p.updatepoint(1);
-                        // p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se
-                        // points leliye
-                        System.out.println("Total points: " + p.get_points());
-                        continue;
+                if (sup.equals("")) {
+                    p.settile(r1.get_random());
+                    // p.play();
+                    if (p.get_tilenum() > 19) {
+                        System.out
+                                .println("You are too energetic and zoomed past all the tiles. Muddy Puddle Splash!\n");
+
                     } else {
-                        p.updatelocation(dise);
+                        if (p.get_tilenum() % 2 == 0) {// even here means odd in reality
+                            int f = 1;
+                            // System.out.println("check1 ");
+                            while (f == 1) {
+                                System.out.println("You landed on Tile " + (p.get_tilenum() + 1));
+                                System.out.println("Question answer round. Integer or strings?\n");
+                                String quest = scan.next();
+                                if (quest.equals("string")) {
+                                    // flow to tilecarpet
+                                    String s1 = rs.getrString();
+                                    String s2 = rs.getrString();
+                                    System.out.println(s1 + "  " + s2 + "\n");
+                                    genCalc<String> genStr = new genCalc(s1, s2);
+                                    String result = genStr.cat();
+                                    String input = scan.next();
+                                    if (input.equals(result)) {
+                                        // gives reward;
+                                        softToys sft;
+                                        try {
+                                            sft = tc.getToy(p.get_tilenum());
+                                        } catch (CloneNotSupportedException e) {
+                                            System.out.println("Unable to Create Clone Object !!");
+                                        }
 
+                                        sft = tc.getToy(p.get_tilenum());
+                                        p.update(sft.getname());
+                                        // System.out.println("You landed on Tile " + (p.get_tilenum() + 1) + "\n");
+                                        // softToys sft = tc.getToy(p.get_tilenum());
+                                        System.out.println("You won a " + sft.getname() + " Soft toy");
+                                    } else {
+                                        // bhago u lost
+                                        System.out.println("Incorrect answer");
+                                        System.out.println("You did not win any soft toy");
+                                    }
+
+                                    f = 0;
+                                } else if (quest.equals("integer")) {// random int generation wala
+                                    // flow to tilecarpet
+                                    int a = r2.get_random();
+                                    int b = r2.get_random();
+                                    System.out.println(a + " " + b + "\n");
+                                    genCalc<Integer> genInt = new genCalc(a, b);
+                                    int result = genInt.div();
+                                    int ip = 0;//
+                                    int flg4 = 1;
+                                    while (flg4 == 1) {
+                                        try {
+                                            int input = scan.nextInt();
+                                            ip = input;
+                                            flg4 = 0;
+                                        } catch (InputMismatchException e) {
+                                            scan.next();
+                                            System.err.println("INPUT MISMATCH ERROR!! Please enter valid input!\n");
+
+                                        }
+                                    }
+
+                                    if (ip == result) {
+                                        // gives reward;
+                                        softToys sft;
+                                        try {
+                                            sft = tc.getToy(p.get_tilenum());
+                                        } catch (CloneNotSupportedException e) {
+                                            System.out.println("Unable to Create Clone Object !!");
+                                        }
+                                        sft = tc.getToy(p.get_tilenum());
+                                        p.update(sft.getname());
+                                        // System.out.println("You landed on Tile " + (p.get_tilenum() + 1) + "\n");
+                                        // softToys sft = tc.getToy(p.get_tilenum());
+                                        System.out.println("You won a " + sft.getname() + " Soft toy");
+                                        // p.update(sft.getname());
+
+                                    } else {
+                                        // bhago u lost
+                                        System.out.println("Incorrect answer");
+                                        System.out.println("You did not win any soft toy");
+                                    }
+
+                                    f = 0;
+                                } else {
+                                    continue;
+                                }
+
+                            }
+
+                        } else {
+                            // free
+                            System.out.println("You landed on Tile " + (p.get_tilenum() + 1) + "\n");
+                            softToys sft;
+                            try {
+                                sft = tc.getToy(p.get_tilenum());
+                            } catch (CloneNotSupportedException e) {
+                                System.out.println("Unable to Create Clone Object !!");
+                            }
+                            sft = tc.getToy(p.get_tilenum());
+                            System.out.println("You won a " + sft.getname() + " Soft toy");
+                            p.update(sft.getname());
+
+                            // tc.getToy(p.get_tilenum());// clonable wala kaam and uske baad update play
+
+                        }
                     }
-
-                    System.out.println("Player position floor: " + p.get_location());
-
-                    if (flr.get(p.get_location()).get_type() == 0) {
-                        System.out.println(p.get_name() + " has reached an Empty Floor!");
-
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                    } else if (flr.get(p.get_location()).get_type() == 1) {
-                        System.out.println(p.get_name() + " has reached a Snake Floor!");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-
-                        System.out.println("Player position Floor : " + p.get_location());
-                        System.out.println(p.get_name() + " has reached an Empty Floor");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-                        // System.out.println("Total points : "+p.get_points());
-
-                    } else if (flr.get(p.get_location()).get_type() == 2) {
-                        System.out.println(p.get_name() + " has reached a King Cobra Floor!");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-
-                        System.out.println("Player position Floor : " + p.get_location());
-                        System.out.println(p.get_name() + " has reached an Empty Floor");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-                    }
-
-                    else if (flr.get(p.get_location()).get_type() == 3) {
-                        System.out.println(p.get_name() + " has reached a Ladder Floor!");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-
-                        System.out.println("Player position Floor : " + p.get_location());
-                        System.out.println(p.get_name() + " has reached an Empty Floor");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-                    }
-
-                    else if (flr.get(p.get_location()).get_type() == 4) {
-                        System.out.println(p.get_name() + " has reached an Elevator Floor!");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-
-                        System.out.println("Player position Floor : " + p.get_location());
-                        System.out.println(p.get_name() + " has reached an Empty Floor");
-                        p.updatepoint(flr.get(p.get_location()).get_points_given());// floor se points leliye
-                        System.out.println("Total points: " + p.get_points());
-
-                        p.updatelocation(flr.get(p.get_location()).get_update_location());
-                    }
-
+                    flg2 = 0;
                 }
-                if (p.get_location() == 13) {
-                    System.out.println("Game Over!");
-                    break;
-                }
-
-            } else {
-                continue;
             }
         }
-
+        System.out.println("Game Over");
+        System.out.println("Soft toys won by you are:\n");
+        p.printbucket();
+        // genCalc<String> g = new genCalc("adi", "chu");
+        // // g.setprm("aditya", "chu");
+        // String s = (g.geta() + g.getb());
+        // System.out.println(s);
     }
+
 }
