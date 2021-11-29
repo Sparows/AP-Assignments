@@ -4,6 +4,18 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+class CreatedException extends Exception {
+    public CreatedException(String s) {
+        super(s);
+    }
+}
+
+class CreatedException2 extends Exception {
+    public CreatedException2(String s) {
+        super(s);
+    }
+}
+
 class bucket {
     private int i = 0;
     private ArrayList<String> buck = new ArrayList<String>();
@@ -269,7 +281,8 @@ public class game {
                                     // flow to tilecarpet
                                     int a = r2.get_random();
                                     int b = r2.get_random();
-                                    System.out.println("Calculate Integer Division of " + a + " Divided by  " + b + " :\n");
+                                    System.out.println(
+                                            "Calculate Integer Division of " + a + " Divided by  " + b + " :\n");
                                     genCalc<Integer> genInt = new genCalc(a, b);
                                     int result = genInt.div();
                                     int ip = 0;//
@@ -281,7 +294,7 @@ public class game {
                                             flg4 = 0;
                                         } catch (InputMismatchException e) {
                                             scan.next();
-                                            System.err.println("INPUT MISMATCH ERROR!! Please enter valid input!\n");
+                                            System.err.println("\nINPUT MISMATCH ERROR!! Please enter valid input!\n");
 
                                         }
                                     }
@@ -302,14 +315,21 @@ public class game {
                                         // p.update(sft.getname());
 
                                     } else {
-                                        // bhago u lost
-                                        System.out.println("Incorrect answer");
-                                        System.out.println("You did not win any soft toy");
+                                        try {
+                                            throw new CreatedException2("CreatedException2.0");
+                                        } catch (CreatedException2 e) {
+                                            System.out.println(
+                                                    "\nINCORRECT ANSWER EXCEPTION !! Incorrect Answer \n\nYou didn't win any Soft toys");
+                                        }
                                     }
 
                                     f = 0;
                                 } else {
-                                    continue;
+                                    try {
+                                        throw new CreatedException("CreatedException");
+                                    } catch (CreatedException e) {
+                                        System.out.println("\nINVALID INPUT EXCEPTION !! \n\nEnter valid Input:");
+                                    }
                                 }
 
                             }
