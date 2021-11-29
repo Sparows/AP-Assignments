@@ -40,7 +40,7 @@ class randomString {
 
     public String getrString() {
         StringBuffer randomString = new StringBuffer();
-        // loop for 10 times
+        
         int count = 0;
         while (count < 4) {
 
@@ -77,7 +77,7 @@ class player {
     private bucket b = new bucket();
     private int tile_num;
 
-    // random rand = new random(50, 0);
+    
     public void printbucket() {
         b.getItems();
     }
@@ -309,8 +309,7 @@ public class game {
                                         }
                                         sft = tc.getToy(p.get_tilenum());
                                         p.update(sft.getname());
-                                        // System.out.println("You landed on Tile " + (p.get_tilenum() + 1) + "\n");
-                                        // softToys sft = tc.getToy(p.get_tilenum());
+                                        
                                         System.out.println("You won a " + sft.getname() + " Soft toy");
                                         // p.update(sft.getname());
 
@@ -358,10 +357,7 @@ public class game {
         System.out.println("Game Over");
         System.out.println("Soft toys won by you are:\n");
         p.printbucket();
-        // genCalc<String> g = new genCalc("adi", "chu");
-        // // g.setprm("aditya", "chu");
-        // String s = (g.geta() + g.getb());
-        // System.out.println(s);
+        
     }
 
 }
